@@ -1,9 +1,8 @@
 import React from "react";
 import { range } from "../../utils";
-import { checkGuess } from "../../game-helpers";
 
-function Guess({ guess, answer }) {
-  const guessArray = guess ? checkGuess(guess, answer) : range(5).map(() => "");
+function Guess({ guess }) {
+  const guessArray = guess ? guess : range(5).map(() => "");
   
   return (
     <p className="guess">
