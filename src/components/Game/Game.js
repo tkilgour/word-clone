@@ -18,26 +18,37 @@ function Game() {
   const [guesses, setFormattedGuesses] = React.useState([]);
   const [isGameWon, setIsGameWon] = React.useState(null);
 
-  function setGuesses(nextGuesses) {
-    const checkedGuess = checkGuess(nextGuesses.pop(), answer)
+  function setGuesses(tentativeGuesses) {
+    const checkedGuess = checkGuess(tentativeGuesses.pop(), answer)
+    const nextGuesses = [...guesses, checkedGuess]
 
     if (checkedGuess.every((letterObj) => letterObj.status === "correct")) {
       setIsGameWon(true);
     } else {
       // guess was incorrect
-      if (guesses.length >= NUM_OF_GUESSES_ALLOWED - 1) {
+      if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
         setIsGameWon(false);
       }
     }
     
-    setFormattedGuesses([...guesses, checkedGuess]);
+    setFormattedGuesses(nextGuesses);
   }
   
   return (
     <>
-      <GuessResults guesses={guesses} setIsGameWon={setIsGameWon}/>
-      <GuessInput guesses={guesses} setGuesses={setGuesses} isGameWon={isGameWon} />
-      <Banner isGameWon={isGameWon} answer={answer}/>
+      <GuessResults guesses={guesses} setIsGameWon={setIsGameWon} />
+      <GuessInput
+        guesses={guesses}
+        setGuesses={setGuesses}
+        isGameWon={isGameWon}
+      />
+      {isGameWon !== null && (
+        <Banner
+          isGameWon={isGameWon}
+          answer={answer}
+          numOfGuesses={guesses.length}
+        />
+      )}
     </>
   );
 }
