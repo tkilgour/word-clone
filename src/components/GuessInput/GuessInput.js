@@ -6,9 +6,12 @@ function GuessInput() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (guess.length !== 5) return;
+    if (guess.length !== 5) {
+      alert("Guess must be 5 letters long");
+      return;
+    }
     
-    console.log(guess);
+    console.log({guess});
     setGuess("");
   }
 
