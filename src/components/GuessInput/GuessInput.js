@@ -1,6 +1,6 @@
 import React from "react";
 
-function GuessInput() {
+function GuessInput({ guesses, setGuesses }) {
   const [guess, setGuess] = React.useState("");
 
   const handleSubmit = (e) => {
@@ -10,10 +10,10 @@ function GuessInput() {
       alert("Guess must be 5 letters long");
       return;
     }
-    
-    console.log({guess});
+
+    setGuesses([...guesses, guess]);    
     setGuess("");
-  }
+  };
 
   return (
     <form className="guess-input-wrapper" onSubmit={handleSubmit}>
